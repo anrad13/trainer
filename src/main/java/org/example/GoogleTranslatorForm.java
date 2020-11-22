@@ -22,6 +22,7 @@ public class GoogleTranslatorForm {
 
     public void init() {
         Selenide.open(PAGE_URL);
+        sleep5();
         selectLanguage();
     }
 
