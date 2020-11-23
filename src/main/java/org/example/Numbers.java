@@ -5,7 +5,7 @@ import java.util.stream.Stream;
 
 public class Numbers
 {
-    private static final int TRAINING_LIMIT = 30;
+    private static final int TRAINING_LIMIT = 100;
     static final int SOUND_WAITING_SEC = 2;
 
     final static Random random = new Random(System.currentTimeMillis());
