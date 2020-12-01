@@ -5,23 +5,51 @@ import java.util.stream.Stream;
 
 public class Numbers
 {
-    private static final int TRAINING_LIMIT = 100;
-    static final int SOUND_WAITING_SEC = 2;
+    private int trainingLimit = 100;
+    private int soundWaitingSec = 2;
 
-    final static Random random = new Random(System.currentTimeMillis());
-    final static GoogleTranslatorForm f = new GoogleTranslatorForm();
+    final Random random = new Random(System.currentTimeMillis());
+    final GoogleTranslatorForm f = new GoogleTranslatorForm();
 
-    void apply(int range) {
+    public Numbers() {
+    }
+
+    public Numbers setLimit(int trainingLimit) {
+        this.trainingLimit = trainingLimit;
+        return this;
+    }
+
+    public Numbers setSoundWait(int soundWaitingSec) {
+        this.soundWaitingSec = soundWaitingSec;
+        return this;
+    }
+
+    public void apply(int range) {
+        final Printer printer = new Printer();
         Stream.generate(() -> random.nextInt(range))
-                .limit(TRAINING_LIMIT)
+                .limit(trainingLimit)
                 .map(number -> Integer.toString(number))
                 .forEachOrdered(
                         number -> {
-                            System.out.print(number + " ");
+                            printer.printNumber(number);
                             f.say(number);
-                            f.sleep(SOUND_WAITING_SEC);
+                            f.sleep(soundWaitingSec);
                         }
                 );
+    }
+
+    class Printer {
+        private static final int LINE_MAX_NUMBERS = 3;
+        private int lineCount = 0;
+
+        void printNumber (String number) {
+            if (lineCount >= LINE_MAX_NUMBERS) {
+                lineCount = 0;
+                System.out.println();
+            }
+            lineCount++;
+            System.out.print(number + "\t");
+        }
     }
 
 }
